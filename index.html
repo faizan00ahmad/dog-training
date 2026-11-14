@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,15 +38,6 @@
     --glass-shadow: 0 10px 40px rgba(14,70,45,.13);
     --glass-spec: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.3);
     --blur: blur(24px) saturate(180%); --radius: 24px; --max: 1180px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #050e09; --bg-alt: #0e1a14; --fg: #eef7f1; --fg-2: #cfe0d5; --fg-dim: #9db2a5;
-      --accent: #4fd18a; --accent-hover: #7be3aa; --on-accent: #04210f;
-      --line: rgba(255,255,255,.14); --line-strong: rgba(255,255,255,.34);
-      --glass: rgba(28,44,36,.5); --glass-in: rgba(255,255,255,.06); --glass-edge: rgba(255,255,255,.16);
-      --glass-shadow: 0 12px 44px rgba(0,0,0,.5); --glass-spec: inset 0 1px 0 rgba(255,255,255,.22);
-    }
   }
   :root[data-theme="dark"] {
     --bg: #050e09; --bg-alt: #0e1a14; --fg: #eef7f1; --fg-2: #cfe0d5; --fg-dim: #9db2a5;
@@ -129,7 +120,8 @@
   .nav { margin-left: auto; display: flex; gap: 22px; align-items: center; }
   .nav a { text-decoration: none; color: var(--fg-2); font-size: .94rem; font-weight: 500; }
   .nav a:hover { color: var(--accent); }
-  .menu-btn { display: none; margin-left: auto; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--glass-edge); background: var(--glass); color: var(--fg); font-size: 1.2rem; cursor: pointer; }
+  .theme-btn { margin-left: auto; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--glass-edge); background: var(--glass); color: var(--fg); font-size: 1.05rem; cursor: pointer; flex: none; }
+  .menu-btn { display: none; margin-left: 0; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--glass-edge); background: var(--glass); color: var(--fg); font-size: 1.2rem; cursor: pointer; }
 
   /* Hero (full-bleed video band, as in the reference) */
   .hero { padding: 24px 0 0; }
@@ -317,7 +309,8 @@
       <a href="#stories">Stories</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="#book" style="margin-left:auto">Book a Free Call</a>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">🌙</button>
+    <a class="btn btn-primary btn-sm" href="#book">Book a Free Call</a>
     <button class="menu-btn" id="menuBtn" aria-controls="nav" aria-expanded="false" aria-label="Open menu">☰</button>
   </div>
 </header>
@@ -642,6 +635,25 @@
 </div>
 
 <script>
+  // Theme: light by default; the visitor's choice is remembered on this device
+  const root = document.documentElement;
+  const themeBtn = document.getElementById('themeBtn');
+  function applyTheme(mode) {
+    root.setAttribute('data-theme', mode);
+    themeBtn.textContent = mode === 'dark' ? '☀️' : '🌙';
+    const next = mode === 'dark' ? 'light' : 'dark';
+    themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' mode');
+    themeBtn.title = 'Switch to ' + next + ' mode';
+  }
+  let saved = null;
+  try { saved = localStorage.getItem('pp-theme'); } catch (e) {}
+  applyTheme(saved === 'dark' ? 'dark' : 'light');
+  themeBtn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem('pp-theme', next); } catch (e) {}
+  });
+
   const menuBtn = document.getElementById('menuBtn');
   const nav = document.getElementById('nav');
   menuBtn.addEventListener('click', () => {
