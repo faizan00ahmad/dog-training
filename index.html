@@ -138,8 +138,8 @@
     display: flex; align-items: center; justify-content: center; text-align: center; color: #fff;
     background: #0a1a12; box-shadow: var(--glass-shadow);
   }
-  .hero-stage iframe, .hero-stage .fallback {
-    position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none;
+  .hero-stage video, .hero-stage .fallback, .phone video {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; pointer-events: none;
   }
   .hero-stage .fallback { background: radial-gradient(900px 400px at 75% 10%, rgba(79,209,138,.35), transparent 60%), linear-gradient(135deg, #0d6a40, #0a1a12); }
   .hero-stage::after {
@@ -330,11 +330,10 @@
       <div class="hero-stage">
         <!-- YouTube: "The ABSOLUTE BEST compilation of LOOSE LEASH WALKING TUTORIALS" by Kikopup -->
         <div class="fallback" aria-hidden="true"></div>
-        <iframe
-          src="https://www.youtube-nocookie.com/embed/EK6PZ5l-3lI?autoplay=1&mute=1&loop=1&playlist=EK6PZ5l-3lI&controls=0&playsinline=1&modestbranding=1&rel=0"
-          title="Loose leash walking dog training video"
-          allow="autoplay; encrypted-media; picture-in-picture"
-          loading="lazy"></iframe>
+        <video autoplay muted loop playsinline preload="metadata" poster="https://assets.mixkit.co/videos/39559/39559-thumb-720-0.jpg"
+               aria-label="A trained dog walking beside its owner in an open field">
+          <source src="https://assets.mixkit.co/videos/39559/39559-720.mp4" type="video/mp4">
+        </video>
         <div class="hero-content">
           <span class="eyebrow">Dog trainer in Austin, TX · Since 2012</span>
           <h1>In-home dog training in Austin that stops leash pulling and reactivity</h1>
@@ -484,21 +483,27 @@
       <div class="center">
         <span class="eyebrow">From the field</span>
         <h2>Austin dog owners share their results</h2>
-        <p class="lead">Placeholder video reviews. Replace with real, permitted client videos and written reviews.</p>
+        <p class="lead">Training clips from our programmes. Replace with real, permitted client video reviews once you have them.</p>
       </div>
       <div class="phones">
-        <div class="phone p1" role="img" aria-label="Video review placeholder: Sarah and Biscuit">
-          <span class="play" aria-hidden="true">▶</span>
+        <figure class="phone p1" style="margin:0">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="Dog walking on a loose leash during a training session">
+            <source src="https://assets.mixkit.co/videos/36496/36496-720.mp4" type="video/mp4">
+          </video>
           <div class="caption"><strong>Sarah M. · Biscuit</strong><br>Lead pulling, Riverside</div>
-        </div>
-        <div class="phone p2" role="img" aria-label="Video review placeholder: James, Lin and Mochi">
-          <span class="play" aria-hidden="true">▶</span>
+        </figure>
+        <figure class="phone p2" style="margin:0">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="Puppy practising a sit during a training session">
+            <source src="https://assets.mixkit.co/videos/13185/13185-720.mp4" type="video/mp4">
+          </video>
           <div class="caption"><strong>James &amp; Lin · Mochi</strong><br>Puppy recall, Downtown</div>
-        </div>
-        <div class="phone p3" role="img" aria-label="Video review placeholder: Priya and Rocky">
-          <span class="play" aria-hidden="true">▶</span>
+        </figure>
+        <figure class="phone p3" style="margin:0">
+          <video autoplay muted loop playsinline preload="metadata" aria-label="Trainer working with a dog outdoors">
+            <source src="https://assets.mixkit.co/videos/39515/39515-720.mp4" type="video/mp4">
+          </video>
           <div class="caption"><strong>Priya K. · Rocky</strong><br>Visitor barking, South Lamar</div>
-        </div>
+        </figure>
       </div>
     </div>
   </section>
