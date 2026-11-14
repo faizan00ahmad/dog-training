@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paws &amp; Path Dog Training | Austin's Leading Dog Trainer</title>
+<meta name="description" content="Paws & Path offers veterinarian-recommended, force-free dog training in your home. Obedience, behaviour and puppy training with lifetime support.">
+<style>
+  /* Liquid Glass design system (adapted from the PCPA website 3 design) */
+  :root {
+    --bg: #e8f1ec; --bg-alt: #dce9e2; --fg: #0f2118; --fg-2: #2b4034; --fg-dim: #44584d;
+    --accent: #0d6a40; --accent-hover: #094f30; --on-accent: #ffffff;
+    --line: rgba(15,45,30,.12); --line-strong: rgba(15,45,30,.3);
+    --glass: rgba(255,255,255,.55); --glass-in: rgba(255,255,255,.55); --glass-edge: rgba(255,255,255,.8);
+    --glass-shadow: 0 10px 40px rgba(14,70,45,.13);
+    --glass-spec: inset 0 1px 0 rgba(255,255,255,.95), inset 0 -1px 0 rgba(255,255,255,.3);
+    --blur: blur(24px) saturate(180%); --radius: 24px; --max: 1180px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #050e09; --bg-alt: #0e1a14; --fg: #eef7f1; --fg-2: #cfe0d5; --fg-dim: #9db2a5;
+      --accent: #4fd18a; --accent-hover: #7be3aa; --on-accent: #04210f;
+      --line: rgba(255,255,255,.14); --line-strong: rgba(255,255,255,.34);
+      --glass: rgba(28,44,36,.5); --glass-in: rgba(255,255,255,.06); --glass-edge: rgba(255,255,255,.16);
+      --glass-shadow: 0 12px 44px rgba(0,0,0,.5); --glass-spec: inset 0 1px 0 rgba(255,255,255,.22);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #050e09; --bg-alt: #0e1a14; --fg: #eef7f1; --fg-2: #cfe0d5; --fg-dim: #9db2a5;
+    --accent: #4fd18a; --accent-hover: #7be3aa; --on-accent: #04210f;
+    --line: rgba(255,255,255,.14); --line-strong: rgba(255,255,255,.34);
+    --glass: rgba(28,44,36,.5); --glass-in: rgba(255,255,255,.06); --glass-edge: rgba(255,255,255,.16);
+    --glass-shadow: 0 12px 44px rgba(0,0,0,.5); --glass-spec: inset 0 1px 0 rgba(255,255,255,.22);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased; overflow-x: clip;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+  h1, h2, h3 { letter-spacing: -0.03em; line-height: 1.08; margin: 0; color: var(--fg); }
+  h1 { font-size: clamp(2.6rem, 6.4vw, 5.2rem); font-weight: 700; }
+  h2 { font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 700; }
+  h3 { font-size: 1.35rem; font-weight: 650; letter-spacing: -0.02em; }
+  p { margin: 0 0 1em; color: var(--fg-2); }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+  section { padding: clamp(72px, 10vw, 120px) 0; position: relative; }
+  .eyebrow { color: var(--accent); font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; margin: 0 0 12px; display: block; }
+  .center { text-align: center; }
+  .center p.lead { margin-left: auto; margin-right: auto; }
+  .lead { font-size: 1.15rem; max-width: 640px; }
+  .sr-only-focus:focus { outline: 3px solid var(--accent); outline-offset: 3px; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  /* Aurora backdrop */
+  .aurora { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+  .aurora i { position: absolute; border-radius: 50%; filter: blur(90px); }
+  .aurora i:nth-child(1) { width: 62vmax; height: 62vmax; left: -16vmax; top: -22vmax; background: #2fbf7a; opacity: .32; }
+  .aurora i:nth-child(2) { width: 52vmax; height: 52vmax; right: -14vmax; top: 6vh; background: #19a3a0; opacity: .3; }
+  .aurora i:nth-child(3) { width: 46vmax; height: 46vmax; left: 22vw; bottom: -24vmax; background: #f2cd62; opacity: .34; }
+  :root[data-theme="dark"] .aurora i:nth-child(1) { background: #0f8a52; opacity: .32; }
+  :root[data-theme="dark"] .aurora i:nth-child(2) { background: #0b6f78; opacity: .26; }
+  :root[data-theme="dark"] .aurora i:nth-child(3) { background: #7a6112; opacity: .16; }
+
+  /* Glass primitives */
+  .glass {
+    position: relative; background: var(--glass);
+    -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow), var(--glass-spec);
+    border-radius: var(--radius); color: var(--fg);
+  }
+  .glass-in {
+    background: var(--glass-in); border: 1px solid var(--line); border-radius: 18px;
+    box-shadow: inset 0 1px 0 var(--glass-edge);
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 50px; padding: 0 26px; border-radius: 999px; font-weight: 600; font-size: 1rem;
+    text-decoration: none; border: 1px solid transparent; cursor: pointer;
+    transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary { background: var(--accent); color: var(--on-accent); box-shadow: 0 8px 24px rgba(13,106,64,.3); }
+  .btn-primary:hover { background: var(--accent-hover); }
+  .btn-glass { background: var(--glass); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); border-color: var(--glass-edge); color: var(--fg); box-shadow: var(--glass-spec); }
+  .btn-glass:hover { background: var(--glass-in); }
+  .btn-sm { min-height: 40px; padding: 0 18px; font-size: .92rem; }
+  .textlink { color: var(--accent); font-weight: 600; text-decoration: none; }
+  .textlink:hover { text-decoration: underline; }
+
+  /* Floating glass header */
+  .header { position: sticky; top: 12px; z-index: 60; padding: 0 12px; }
+  .header-in {
+    position: relative; isolation: isolate; display: flex; align-items: center; gap: 12px;
+    max-width: var(--max); height: 62px; padding: 0 10px 0 20px; margin: 0 auto; border-radius: 999px;
+    background: var(--glass); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow), var(--glass-spec);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700; color: var(--fg); letter-spacing: -.02em; white-space: nowrap; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 50%; background: var(--accent); color: var(--on-accent); display: grid; place-items: center; font-size: 1rem; }
+  .nav { margin-left: auto; display: flex; gap: 22px; align-items: center; }
+  .nav a { text-decoration: none; color: var(--fg-2); font-size: .94rem; font-weight: 500; }
+  .nav a:hover { color: var(--accent); }
+  .menu-btn { display: none; margin-left: auto; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--glass-edge); background: var(--glass); color: var(--fg); font-size: 1.2rem; cursor: pointer; }
+
+  /* Hero */
+  .hero { padding: 56px 0 72px; }
+  .hero-grid { display: grid; gap: 40px; grid-template-columns: 1fr; align-items: center; }
+  .hero h1 { max-width: 13ch; }
+  .hero .lead { margin-top: 20px; }
+  .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 36px; }
+  .hero-stats .glass-in { padding: 16px; text-align: center; }
+  .hero-stats strong { display: block; font-size: 1.6rem; color: var(--fg); letter-spacing: -.02em; }
+  .hero-stats span { font-size: .84rem; color: var(--fg-dim); }
+  .video-card { padding: 10px; }
+  .video-frame {
+    position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #0d6a40, #0b3b2a 60%, #1c2f26);
+  }
+  .video-frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .video-frame .video-note {
+    position: absolute; inset: 0; display: grid; place-items: center; text-align: center; color: #e9f7ef; padding: 24px; font-size: .95rem;
+  }
+  .video-badge {
+    position: absolute; left: 14px; bottom: 14px; z-index: 2; padding: 8px 14px; border-radius: 999px;
+    background: var(--glass); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-edge); font-size: .85rem; color: var(--fg); font-weight: 600;
+  }
+
+  /* Trust strip */
+  .trust { padding: 0 0 40px; }
+  .trust-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 16px 22px; border-radius: 999px; }
+  .trust-row span { font-size: .92rem; color: var(--fg-2); font-weight: 500; }
+  .trust-row span b { color: var(--accent); }
+
+  /* Services bento */
+  .bento { display: grid; gap: 18px; grid-template-columns: 1fr; margin-top: 52px; }
+  .tile { padding: 32px; display: flex; flex-direction: column; gap: 12px; }
+  .tile .icon { width: 52px; height: 52px; border-radius: 16px; background: var(--glass-in); border: 1px solid var(--line); display: grid; place-items: center; font-size: 1.5rem; }
+  .tile p { margin: 0; }
+  .tile ul { margin: 6px 0 0; padding-left: 18px; color: var(--fg-2); font-size: .97rem; }
+  .tile .price { font-size: 1.4rem; font-weight: 700; color: var(--fg); letter-spacing: -.02em; margin-top: auto; padding-top: 10px; }
+  .tile .price small { font-size: .85rem; color: var(--fg-dim); font-weight: 500; }
+  .tile .btn { align-self: flex-start; margin-top: 8px; }
+  .tile.wide { grid-column: 1 / -1; }
+
+  /* Steps */
+  .steps { display: grid; gap: 18px; grid-template-columns: 1fr; margin-top: 52px; }
+  .step { padding: 30px; }
+  .step .num { font-size: .85rem; font-weight: 700; color: var(--accent); letter-spacing: .1em; }
+  .step h3 { margin: 10px 0 8px; }
+
+  /* Method */
+  .method { display: grid; gap: 22px; grid-template-columns: 1fr; margin-top: 52px; }
+  .method-main { padding: 36px; }
+  .method-main ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 12px; }
+  .method-main li { display: flex; gap: 12px; color: var(--fg-2); }
+  .method-main li::before { content: "✓"; color: var(--on-accent); background: var(--accent); width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .78rem; font-weight: 700; flex: none; margin-top: 3px; }
+  .guarantee { padding: 36px; background: linear-gradient(160deg, rgba(13,106,64,.92), rgba(9,79,48,.92)); color: #eaf7ef; border-color: transparent; }
+  .guarantee h3, .guarantee p { color: #fff; }
+  .guarantee p { color: #d6eee0; }
+  .guarantee .quote { font-size: 1.15rem; font-style: italic; margin: 16px 0; color: #fff; }
+
+  /* Reviews */
+  .reviews { display: grid; gap: 18px; grid-template-columns: 1fr; margin-top: 52px; }
+  .review { padding: 28px; display: flex; flex-direction: column; gap: 14px; }
+  .stars { color: #d9a441; letter-spacing: 3px; font-size: .95rem; }
+  .review blockquote { margin: 0; color: var(--fg); font-size: 1rem; line-height: 1.6; }
+  .review .who { margin-top: auto; font-size: .88rem; color: var(--fg-dim); }
+  .review .who strong { display: block; color: var(--fg); font-size: .95rem; }
+  .review-tag { display: inline-block; align-self: flex-start; font-size: .75rem; font-weight: 600; color: var(--accent); background: var(--glass-in); border: 1px solid var(--line); padding: 4px 10px; border-radius: 999px; }
+
+  /* Trainer */
+  .trainer { display: grid; gap: 22px; grid-template-columns: 1fr; margin-top: 52px; }
+  .trainer-photo { min-height: 360px; border-radius: var(--radius); overflow: hidden; display: grid; place-items: center; text-align: center; padding: 24px; color: var(--fg-2); background: linear-gradient(160deg, rgba(255,255,255,.7), rgba(200,225,210,.6)); }
+  :root[data-theme="dark"] .trainer-photo { background: linear-gradient(160deg, #15241d, #0d1a14); }
+  .trainer-body { padding: 36px; }
+  .trainer-body ul { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; color: var(--fg-2); }
+  .trainer-body li::before { content: "•"; color: var(--accent); margin-right: 10px; font-weight: 700; }
+
+  /* FAQ */
+  .faq { display: grid; gap: 12px; max-width: 820px; margin: 48px auto 0; }
+  details { padding: 4px 24px; }
+  details summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; min-height: 60px; font-weight: 600; color: var(--fg); font-size: 1.05rem; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: "+"; color: var(--accent); font-size: 1.5rem; font-weight: 400; }
+  details[open] summary::after { content: "−"; }
+  details p { margin: 0 0 20px; }
+
+  /* Booking */
+  .book { display: grid; gap: 24px; grid-template-columns: 1fr; margin-top: 52px; }
+  .book-info { padding: 36px; }
+  .book-info dl { margin: 24px 0 0; display: grid; gap: 14px; }
+  .book-info dt { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+  .book-info dd { margin: 2px 0 0; color: var(--fg); font-size: 1.05rem; }
+  .form { padding: 36px; display: grid; gap: 14px; }
+  .form label { display: grid; gap: 6px; font-size: .9rem; font-weight: 600; color: var(--fg); }
+  .form input, .form select, .form textarea {
+    width: 100%; min-height: 50px; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line-strong);
+    background: var(--glass-in); color: var(--fg); font: inherit; font-weight: 400;
+  }
+  .form textarea { min-height: 96px; resize: vertical; }
+  .form .row { display: grid; gap: 14px; grid-template-columns: 1fr; }
+  .form .btn { width: 100%; margin-top: 4px; }
+  .form .note { margin: 0; font-size: .85rem; color: var(--fg-dim); text-align: center; min-height: 1.2em; }
+
+  /* Footer */
+  footer { padding: 0 0 40px; }
+  .footer-in { padding: 32px; display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: center; font-size: .92rem; color: var(--fg-dim); }
+  .footer-in nav { display: flex; gap: 18px; flex-wrap: wrap; }
+  .footer-in a { color: var(--fg-2); text-decoration: none; }
+  .footer-in a:hover { color: var(--accent); }
+
+  /* Mobile call bar */
+  .call-bar { display: none; }
+
+  /* Tablet and up */
+  @media (min-width: 760px) {
+    .hero-grid { grid-template-columns: 1.1fr .9fr; }
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: repeat(3, 1fr); }
+    .method { grid-template-columns: 1.2fr .8fr; }
+    .reviews { grid-template-columns: repeat(2, 1fr); }
+    .trainer { grid-template-columns: .9fr 1.1fr; align-items: stretch; }
+    .book { grid-template-columns: .9fr 1.1fr; align-items: start; }
+    .form .row { grid-template-columns: 1fr 1fr; }
+  }
+  @media (min-width: 1040px) {
+    .bento { grid-template-columns: repeat(3, 1fr); }
+    .tile.wide { grid-column: span 2; }
+    .reviews { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Mobile */
+  @media (max-width: 860px) {
+    .nav {
+      position: absolute; top: calc(100% + 10px); left: 12px; right: 12px; flex-direction: column; align-items: stretch; gap: 0;
+      padding: 8px; border-radius: 24px; display: none;
+      background: var(--glass-2, var(--glass)); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+      border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow), var(--glass-spec);
+    }
+    .nav.open { display: flex; }
+    .nav a { padding: 14px 16px; border-radius: 14px; font-size: 1rem; }
+    .nav a:hover { background: var(--glass-in); }
+    .header-in .btn { display: none; }
+    .menu-btn { display: grid; place-items: center; }
+    .hero { padding-top: 28px; }
+    .hero-stats { gap: 8px; }
+    .hero-stats strong { font-size: 1.3rem; }
+    .call-bar {
+      display: flex; gap: 10px; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 55; padding: 10px;
+      border-radius: 999px; background: var(--glass); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur);
+      border: 1px solid var(--glass-edge); box-shadow: var(--glass-shadow), var(--glass-spec);
+    }
+    .call-bar .btn { flex: 1; min-height: 48px; }
+    body { padding-bottom: 96px; }
+  }
+  @media (max-width: 480px) {
+    .wrap { padding: 0 16px; }
+    .tile, .method-main, .guarantee, .book-info, .form, .trainer-body { padding: 26px; }
+    .hero-ctas .btn { width: 100%; }
+    .trust-row { border-radius: 24px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<header class="header">
+  <div class="header-in">
+    <a class="brand" href="#top" aria-label="Paws &amp; Path home">
+      <span class="brand-mark" aria-hidden="true">🐾</span>
+      <span>Paws &amp; Path</span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="#services">Services</a>
+      <a href="#method">Method</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#trainer">About</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#book" style="margin-left:auto">Book a Free Call</a>
+    <button class="menu-btn" id="menuBtn" aria-controls="nav" aria-expanded="false" aria-label="Open menu">☰</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Austin's leading dog trainer · Since 2012</span>
+        <h1>Training dogs &amp; owners for over 12 years.</h1>
+        <p class="lead">Veterinarian-recommended, force-free training delivered in your home. We fix pulling, reactivity, jumping and puppy chaos, then give you the plan and support to keep it working.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#book">Book a Free 15-Minute Call</a>
+          <a class="btn btn-glass" href="#services">View Services</a>
+        </div>
+        <div class="hero-stats">
+          <div class="glass-in"><strong>1,200+</strong><span>Dogs trained</span></div>
+          <div class="glass-in"><strong>4.9★</strong><span>Average rating</span></div>
+          <div class="glass-in"><strong>Lifetime</strong><span>Support included</span></div>
+        </div>
+      </div>
+
+      <div class="glass video-card">
+        <div class="video-frame">
+          <!-- Hero video: YouTube "The ABSOLUTE BEST compilation of LOOSE LEASH WALKING TUTORIALS" by Kikopup -->
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/EK6PZ5l-3lI?autoplay=1&mute=1&loop=1&playlist=EK6PZ5l-3lI&controls=0&playsinline=1&modestbranding=1&rel=0"
+            title="Loose leash walking dog training video"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen loading="lazy"
+            style="position:absolute; inset:0; width:100%; height:100%; border:0;"></iframe>
+          <span class="video-badge">● Real results in one 2-hour session</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <div class="trust">
+    <div class="wrap">
+      <div class="glass trust-row">
+        <span><b>Veterinarian</b> recommended</span>
+        <span><b>CPDT-KA</b> certified</span>
+        <span><b>Insured</b> &amp; bonded</span>
+        <span><b>Lifetime</b> guarantee</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">Services</span>
+        <h2>Pick the problem you're living with</h2>
+        <p class="lead">Every programme is a tailored one-to-one session in your home. We'll match you to the right format on the call.</p>
+      </div>
+
+      <div class="bento">
+        <article class="glass tile wide">
+          <div class="icon" aria-hidden="true">🏡</div>
+          <h3>Obedience Training</h3>
+          <p>Sit, down, stay, loose-lead walking and a reliable recall, taught in your home and on your street.</p>
+          <ul>
+            <li>Tailored one-to-one session (about 2 hours)</li>
+            <li>Plan for every person in the household</li>
+            <li>Free follow-up support by phone and email</li>
+          </ul>
+          <div class="price">From $120 <small>· one-to-one session</small></div>
+          <a class="btn btn-glass btn-sm" href="#book">Book Obedience</a>
+        </article>
+
+        <article class="glass tile">
+          <div class="icon" aria-hidden="true">🧭</div>
+          <h3>Behaviour Problems</h3>
+          <p>Barking, lunging, resource guarding, nipping and anxiety. We find the cause first, because that's half the fix.</p>
+          <div class="price">From $150 <small>· assessment + session</small></div>
+          <a class="btn btn-glass btn-sm" href="#book">Book Behaviour</a>
+        </article>
+
+        <article class="glass tile">
+          <div class="icon" aria-hidden="true">🐶</div>
+          <h3>Puppy Training</h3>
+          <p>House training, bite inhibition, calm greetings and early manners, shaped to your puppy's temperament.</p>
+          <div class="price">From $110 <small>· 2-hour session</small></div>
+          <a class="btn btn-glass btn-sm" href="#book">Book Puppy</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROBLEM CHIPS -->
+  <section style="padding-top:0">
+    <div class="wrap center">
+      <div class="glass" style="padding:28px; border-radius:var(--radius)">
+        <p style="margin:0 0 14px; color:var(--fg); font-weight:600">Sound familiar?</p>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center">
+          <a class="btn btn-glass btn-sm" href="#services">"He pulls the whole way"</a>
+          <a class="btn btn-glass btn-sm" href="#services">"She lunges at other dogs"</a>
+          <a class="btn btn-glass btn-sm" href="#services">"Our puppy bites everything"</a>
+          <a class="btn btn-glass btn-sm" href="#services">"He barks at every visitor"</a>
+          <a class="btn btn-glass btn-sm" href="#services">"Recall? Forget it."</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">How it works</span>
+        <h2>From first call to a calmer dog</h2>
+      </div>
+      <div class="steps">
+        <div class="glass step">
+          <span class="num">STEP 01</span>
+          <h3>Free discovery call</h3>
+          <p>We talk through your dog, your goals and whether we're the right fit. No obligation.</p>
+        </div>
+        <div class="glass step">
+          <span class="num">STEP 02</span>
+          <h3>In-home session</h3>
+          <p>Our trainer works with your dog where the problem happens, then leaves you a written plan.</p>
+        </div>
+        <div class="glass step">
+          <span class="num">STEP 03</span>
+          <h3>Practice &amp; support</h3>
+          <p>Use the plan at home, and get free phone, email and text support for the lifetime of your dog.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METHOD + GUARANTEE -->
+  <section id="method" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">Our method</span>
+        <h2>Balanced, scientific and kind</h2>
+        <p class="lead">We use the psychology of how dogs think and learn. Rewards for what you want, clear communication and no fear-based corrections.</p>
+      </div>
+      <div class="method">
+        <div class="glass method-main">
+          <h3>What you can expect</h3>
+          <ul>
+            <li>Motivational methods built on praise, treats and play</li>
+            <li>No prong collars, shock collars or harsh corrections</li>
+            <li>Management first, so your dog succeeds from day one</li>
+            <li>Owners learn the "why" as well as the "how"</li>
+          </ul>
+        </div>
+        <div class="glass guarantee">
+          <span class="eyebrow" style="color:#bff0d2">Lifetime support</span>
+          <h3>Unbeatable lifetime guarantee</h3>
+          <p class="quote">"Your dog is never intimidated, hurt or scared to learn in our sessions."</p>
+          <p>Every private session includes free phone and email support, free follow-up training if needed, and 24/7 access to our training library.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section id="reviews" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">Reviews</span>
+        <h2>Real owners, real changes</h2>
+        <p class="lead">Excerpts from client reviews. Names and details are placeholders for this demo.</p>
+      </div>
+      <div class="reviews">
+        <figure class="glass review" style="margin:0">
+          <span class="review-tag">Lead pulling · Reactivity</span>
+          <div class="stars" aria-label="5 out of 5">★★★★★</div>
+          <blockquote>"In just two hours he showed us how to have our dog back. The patience and understanding were incredible. Walks are finally enjoyable."</blockquote>
+          <figcaption class="who"><strong>Sarah M.</strong>Riverside · Lab mix</figcaption>
+        </figure>
+        <figure class="glass review" style="margin:0">
+          <span class="review-tag">Puppy · Recall</span>
+          <div class="stars" aria-label="5 out of 5">★★★★★</div>
+          <blockquote>"After 2 hours of training our puppy was tired, and so were we. Two weeks later the recall is already much better. Highly recommend."</blockquote>
+          <figcaption class="who"><strong>James &amp; Lin</strong>Downtown · Husky</figcaption>
+        </figure>
+        <figure class="glass review" style="margin:0">
+          <span class="review-tag">Barking · Visitors</span>
+          <div class="stars" aria-label="5 out of 5">★★★★★</div>
+          <blockquote>"Doorbells and visitors used to set him off. Within the session we had a calm home and a dog who loose-leash walks past other dogs."</blockquote>
+          <figcaption class="who"><strong>Priya K.</strong>South Lamar · Shepherd</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAINER -->
+  <section id="trainer" style="padding-top:0">
+    <div class="wrap">
+      <div class="trainer">
+        <div class="glass trainer-photo">
+          <div>
+            <strong style="color:var(--fg)">Add a photo of Alex working with a dog</strong><br>
+            <span style="font-size:.9rem">Real photos build more trust than stock images.</span>
+          </div>
+        </div>
+        <div class="glass trainer-body">
+          <span class="eyebrow">Meet your trainer</span>
+          <h2 style="font-size:clamp(1.8rem,3.4vw,2.4rem)">Hi, I'm Alex Morgan.</h2>
+          <p style="margin-top:14px">I've spent 12 years helping families whose dogs were pulling, reacting or simply overwhelmed. My approach is patient, practical and focused on a dog you enjoy living with.</p>
+          <ul>
+            <li>CPDT-KA certified, with ongoing continuing education</li>
+            <li>12 years' hands-on experience, including shelter work</li>
+            <li>Fully insured and bonded for in-home work</li>
+            <li>Member of the Association of Professional Dog Trainers</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">FAQ</span>
+        <h2>Questions before you book</h2>
+      </div>
+      <div class="faq">
+        <details class="glass" open>
+          <summary>Do I need to be there, or the whole family?</summary>
+          <p>Ideally the whole household attends, so everyone uses the same cues. If that isn't possible, one person can attend and we'll write a plan to share.</p>
+        </details>
+        <details class="glass">
+          <summary>My dog is reactive to strangers. Will you still come?</summary>
+          <p>Yes. Reactive dogs are a big part of our work. We keep your dog below threshold and never push them past what they can handle.</p>
+        </details>
+        <details class="glass">
+          <summary>How many sessions will my dog need?</summary>
+          <p>Many households see a big change in one 2-hour session, with the plan and support doing the rest. Complex cases may need a follow-up, and we'll tell you honestly after the call.</p>
+        </details>
+        <details class="glass">
+          <summary>What if it rains or I need to reschedule?</summary>
+          <p>Outdoor sections move under cover or indoors where possible. Give 24 hours' notice to reschedule at no charge.</p>
+        </details>
+        <details class="glass">
+          <summary>Do you offer refunds?</summary>
+          <p>Training depends on practice at home, so we don't promise a fixed outcome. If you're not satisfied after the first month, we'll adjust the plan or offer a prorated refund on unused time.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section id="book" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <span class="eyebrow">Book</span>
+        <h2>Book your free 15-minute call</h2>
+        <p class="lead">Tell us about your dog. We'll confirm the best first step, with no obligation.</p>
+      </div>
+      <div class="book">
+        <div class="glass book-info">
+          <h3>Get in touch</h3>
+          <dl>
+            <div><dt>Phone</dt><dd><a href="tel:+15550123456" class="textlink">(555) 012-3456</a></dd></div>
+            <div><dt>Email</dt><dd><a href="mailto:hello@pawspath.example" class="textlink">hello@pawspath.example</a></dd></div>
+            <div><dt>Service area</dt><dd>Austin and surrounding suburbs</dd></div>
+            <div><dt>Hours</dt><dd>Mon–Sat, 8am–6pm</dd></div>
+          </dl>
+        </div>
+        <form class="glass form" id="bookForm" novalidate>
+          <div class="row">
+            <label>Your name <input name="name" type="text" autocomplete="name" required></label>
+            <label>Email <input name="email" type="email" autocomplete="email" required></label>
+          </div>
+          <label>Phone (optional) <input name="phone" type="tel" autocomplete="tel"></label>
+          <label>Dog's name &amp; breed <input name="dog" type="text" placeholder="e.g. Biscuit, Labrador mix" required></label>
+          <label>Main challenge
+            <select name="need" required>
+              <option value="">Choose one…</option>
+              <option>Pulling or leash walking</option>
+              <option>Reactivity to dogs or people</option>
+              <option>Barking, jumping or visitors</option>
+              <option>Puppy training</option>
+              <option>Recall or off-leash</option>
+              <option>Something else</option>
+            </select>
+          </label>
+          <label>Anything else? <textarea name="notes" placeholder="Optional"></textarea></label>
+          <button class="btn btn-primary" type="submit">Request My Free Call</button>
+          <p class="note" id="formMsg" role="status">We reply within one business day. Your details stay private.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="glass footer-in">
+      <div>© <span id="year"></span> Paws &amp; Path Dog Training · Insured &amp; bonded</div>
+      <nav aria-label="Footer">
+        <a href="#services">Services</a>
+        <a href="#faq">FAQ</a>
+        <a href="#book">Contact</a>
+        <a href="#">Privacy</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<div class="call-bar" id="callBar">
+  <a class="btn btn-glass" href="tel:+15550123456">Call</a>
+  <a class="btn btn-primary" href="#book">Book Free Call</a>
+</div>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const nav = document.getElementById('nav');
+  menuBtn.addEventListener('click', () => {
+    const open = nav.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menuBtn.textContent = open ? '✕' : '☰';
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    nav.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    menuBtn.textContent = '☰';
+  }));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Front-end only: connect this to your scheduler or form backend.
+  const form = document.getElementById('bookForm');
+  const msg = document.getElementById('formMsg');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const invalid = [...form.querySelectorAll('[required]')].find(f => !f.value.trim());
+    if (invalid) {
+      msg.textContent = 'Please complete the highlighted fields so we can reach you.';
+      msg.style.color = '#b3261e';
+      invalid.focus();
+      return;
+    }
+    msg.style.color = '';
+    msg.textContent = "Thank you! We'll be in touch within one business day.";
+    form.reset();
+  });
+
+  // Hide the mobile call bar while the booking section is on screen
+  const callBar = document.getElementById('callBar');
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(([entry]) => {
+      callBar.style.display = entry.isIntersecting ? 'none' : '';
+    }, { threshold: 0.2 }).observe(document.getElementById('book'));
+  }
+</script>
+</body>
+</html>
