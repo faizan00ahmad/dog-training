@@ -27,12 +27,14 @@ Then serve the folder from its root (links are root-relative), for example `pyth
 
 ## Before launch
 
-1. Set `SITE["url"]` in `build.py` to the real domain (canonical URLs, sitemap and schema all use it).
+1. `SITE["url"]` is currently the Vercel URL. Set it to the real domain once you have one (canonical URLs, sitemap and schema all use it).
 2. Replace the dummy business details: name, phone, email, prices, address, reviews and the rating in the LocalBusiness schema.
 3. Paste your real IDs into the `TRACKING` block in `build.py`, then rebuild.
 4. Replace the stock testimonial videos and trainer photo with your own.
 5. Connect the booking form to a scheduler or form service (it currently only shows a confirmation).
 6. Have `/privacy/` reviewed. It is a template.
+
+Fill the `SOCIAL` dict in `build.py` with your real profile URLs. Footer links and schema `sameAs` appear only for the ones you set. Email addresses are obfuscated in the HTML and restored by `site.js`. Inline styles are moved into `assets/generated.css` on every build.
 
 ## Tracking (Meta Pixel and Google tag)
 

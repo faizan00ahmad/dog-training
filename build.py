@@ -20,7 +20,7 @@ ROOT = Path(__file__).parent
 # Settings
 # ----------------------------------------------------------------------------
 SITE = {
-    "url": "https://www.pawspath.example",   # replace with the real domain before launch
+    "url": "https://dog-training-one.vercel.app",   # live Vercel URL; switch to the real domain when you have one
     "name": "Paws & Path Dog Training",
     "short": "Paws & Path",
     "city": "Austin",
@@ -34,6 +34,9 @@ SITE = {
 }
 
 # Paste real IDs here. Anything containing YOUR_ or XXXX is treated as "not set" and sends nothing.
+# Add your real profile URLs; links and schema sameAs appear only for the ones you fill in.
+SOCIAL = {"Facebook": "", "Instagram": "", "X": "", "LinkedIn": "", "YouTube": ""}
+
 TRACKING = {
     "META_PIXEL_ID": "YOUR_META_PIXEL_ID",
     "GA4_ID": "G-XXXXXXXXXX",
@@ -221,12 +224,62 @@ def add_img_dims(content):
     return re.sub(r"<img[^>]*>", fix, content)
 
 
+def obfuscate_email(content):
+    """Hide plain-text email addresses from scrapers; site.js restores the mailto link."""
+    import base64
+    def fix(m):
+        addr = m.group(1)
+        enc = base64.b64encode(addr.encode()).decode()
+        attrs = m.group(2).replace('class="textlink"', 'class="textlink"')
+        return f'<a href="/contact/" data-em="{enc}"{attrs}>Email us</a>'
+    content = re.sub(r'<a href="mailto:([^"]+)"([^>]*)>[^<]*</a>', fix, content)
+    return content
+
+
+STYLE_RULES = {}
+
+
+def externalize_styles(content):
+    """Move inline style="" attributes into a generated stylesheet (CSP-friendly, cleaner HTML)."""
+    def cls_for(css):
+        css = css.strip().rstrip(";")
+        key = "s" + format(abs(hash_str(css)) % 10**7, "x")
+        STYLE_RULES[key] = css
+        return key
+
+    def fix(m):
+        tag = m.group(0)
+        st = re.search(r'\sstyle="([^"]*)"', tag)
+        if not st or tag.startswith("<script") or tag.startswith("<noscript"):
+            return tag
+        k = cls_for(st.group(1))
+        tag = tag.replace(st.group(0), "", 1)
+        if re.search(r'\sclass="', tag):
+            tag = re.sub(r'\sclass="([^"]*)"', lambda c: f' class="{c.group(1)} {k}"', tag, 1)
+        else:
+            tag = re.sub(r"^<(\w+)", lambda c: f'<{c.group(1)} class="{k}"', tag, 1)
+        return tag
+    return re.sub(r"<[a-zA-Z][^>]*\sstyle=\"[^\"]*\"[^>]*>", fix, content)
+
+
+def hash_str(t):
+    h = 5381
+    for ch in t:
+        h = (h * 33 + ord(ch)) & 0xFFFFFFFF
+    return h
+
+
+def write_style_sheet():
+    rules = "".join(f".{k}.{k}.{k}{{{v}}}" + chr(10) for k, v in sorted(STYLE_RULES.items()))
+    (ROOT / "assets" / "generated.css").write_text(rules, encoding="utf-8")
+
+
 def write(path, content):
     p = ROOT / path.lstrip("/")
     if path.endswith("/"):
         p = p / "index.html"
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(add_img_dims(content), encoding="utf-8")
+    p.write_text(externalize_styles(obfuscate_email(add_img_dims(content))), encoding="utf-8")
 
 
 def ld(obj):
@@ -249,13 +302,14 @@ def faq_ld(faqs):
 
 def local_business_ld():
     return {"@context": "https://schema.org", "@type": ["LocalBusiness", "ProfessionalService"], "@id": url("/#business"),
-            "name": SITE["name"], "url": url("/"), "telephone": SITE["phone_e164"], "email": SITE["email"],
+            "name": SITE["name"], "url": url("/"), "telephone": SITE["phone_e164"],
             "image": url(SITE["og_image"]), "priceRange": "$$",
             "description": "Force-free, in-home dog training in Austin, TX: obedience, behaviour, reactivity and puppy training.",
             "address": {"@type": "PostalAddress", "addressLocality": SITE["city"], "addressRegion": SITE["region"], "addressCountry": "US"},
             "areaServed": [{"@type": "City", "name": a} for a in SITE["areas"]],
             "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "08:00", "closes": "18:00"}],
             "founder": {"@type": "Person", "name": "Alex Morgan", "jobTitle": "Certified Professional Dog Trainer (CPDT-KA)"},
+            **({"sameAs": [u for u in SOCIAL.values() if u]} if any(SOCIAL.values()) else {}),
             # aggregateRating: add only once you have real, verifiable reviews
             "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Dog training services", "itemListElement": [
                 {"@type": "Offer", "itemOffered": {"@type": "Service", "name": s["name"], "url": url(s["path"])}} for s in SERVICES.values()]}}
@@ -306,6 +360,7 @@ def head(title, description, path, keywords="", extra="", og_type="website", og_
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/generated.css">
 <script>window.PP_CONFIG={json.dumps(cfg)};</script>
 <script src="/assets/tracking.js" defer></script>
 {extra}
@@ -331,6 +386,10 @@ def header(active=""):
 """
 
 
+def social_links():
+    return "".join(f'<a href="{esc(u)}" rel="me noopener" target="_blank" aria-label="{n}">{n}</a> · ' for n, u in SOCIAL.items() if u)
+
+
 def footer():
     svc = "".join(f'<a href="{s["path"]}">{s["name"]}</a>' for s in SERVICES.values())
     posts = "".join(f'<a href="/blog/{p["slug"]}/">{esc(p["h1"].split(":")[0][:48])}</a>' for p in BLOG[:4])
@@ -349,7 +408,7 @@ def footer():
       </div>
       <div class="footer-bottom">
         <span>© <span id="year"></span> {esc(SITE['name'])} · Insured &amp; bonded</span>
-        <span><a href="/privacy/" style="color:inherit">Privacy</a> · <a href="#" data-cookie-settings style="color:inherit">Cookie settings</a></span>
+        <span>{social_links()}<a href="/privacy/" style="color:inherit">Privacy</a> · <a href="#" data-cookie-settings style="color:inherit">Cookie settings</a></span>
       </div>
     </div>
   </div>
@@ -665,4 +724,5 @@ if __name__ == "__main__":
     build_404()
     build_sitemap()
     build_extras()
+    write_style_sheet()
     print("Built:", ", ".join(sorted(str(p.relative_to(ROOT)) for p in ROOT.rglob("index.html") if ".claude" not in str(p))))

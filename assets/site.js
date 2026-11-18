@@ -44,6 +44,11 @@
     });
   }
 
+  // ---- Restore obfuscated email links ----
+  document.querySelectorAll('a[data-em]').forEach(function (a) {
+    try { var m = atob(a.getAttribute('data-em')); a.href = 'mailto:' + m; a.textContent = m; } catch (e) {}
+  });
+
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 

@@ -3,4 +3,4 @@ Allow: /
 Disallow: /src/
 Disallow: /.claude/
 
-Sitemap: https://www.pawspath.example/sitemap.xml
+Sitemap: https://dog-training-one.vercel.app/sitemap.xml
