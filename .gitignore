@@ -10,3 +10,5 @@ node_modules/
 
 # Third-party Claude skill installed for this project only
 .claude/skills/
+__pycache__/
+*.pyc
