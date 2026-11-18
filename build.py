@@ -201,12 +201,32 @@ def slugify(text):
     return re.sub(r"[^a-z0-9]+", "-", re.sub(r"<[^>]+>", "", text).lower()).strip("-")
 
 
+def add_img_dims(content):
+    """Add width/height and async decoding to local <img> tags (prevents layout shift)."""
+    from PIL import Image
+
+    def fix(m):
+        tag = m.group(0)
+        src = re.search(r'src="/?(assets/[^"]+)"', tag)
+        if not src or "width=" in tag:
+            return tag
+        f = ROOT / src.group(1)
+        if not f.exists():
+            return tag
+        w, h = Image.open(f).size
+        extra = f' width="{w}" height="{h}"'
+        if "decoding=" not in tag:
+            extra += ' decoding="async"'
+        return tag[:-1].rstrip("/").rstrip() + extra + ">"
+    return re.sub(r"<img[^>]*>", fix, content)
+
+
 def write(path, content):
     p = ROOT / path.lstrip("/")
     if path.endswith("/"):
         p = p / "index.html"
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(content, encoding="utf-8")
+    p.write_text(add_img_dims(content), encoding="utf-8")
 
 
 def ld(obj):
@@ -236,7 +256,7 @@ def local_business_ld():
             "areaServed": [{"@type": "City", "name": a} for a in SITE["areas"]],
             "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"], "opens": "08:00", "closes": "18:00"}],
             "founder": {"@type": "Person", "name": "Alex Morgan", "jobTitle": "Certified Professional Dog Trainer (CPDT-KA)"},
-            "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "120"},
+            # aggregateRating: add only once you have real, verifiable reviews
             "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Dog training services", "itemListElement": [
                 {"@type": "Offer", "itemOffered": {"@type": "Service", "name": s["name"], "url": url(s["path"])}} for s in SERVICES.values()]}}
 
@@ -259,6 +279,13 @@ def head(title, description, path, keywords="", extra="", og_type="website", og_
 <link rel="canonical" href="{url(path)}">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="theme-color" content="#0b5a3a">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=yes">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="alternate" hreflang="en-us" href="{url(path)}">
+<link rel="alternate" hreflang="x-default" href="{url(path)}">
 <meta name="geo.region" content="US-TX">
 <meta name="geo.placename" content="Austin">
 <meta property="og:type" content="{og_type}">
@@ -267,6 +294,8 @@ def head(title, description, path, keywords="", extra="", og_type="website", og_
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{url(path)}">
 <meta property="og:image" content="{img}">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:alt" content="{esc(SITE['name'])}">
 <meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{esc(title)}">
@@ -274,10 +303,11 @@ def head(title, description, path, keywords="", extra="", og_type="website", og_
 <meta name="twitter:image" content="{img}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&display=swap"></noscript>
 <link rel="stylesheet" href="/assets/site.css">
 <script>window.PP_CONFIG={json.dumps(cfg)};</script>
-<script src="/assets/tracking.js"></script>
+<script src="/assets/tracking.js" defer></script>
 {extra}
 </head>
 <body data-page-type="{page_type}" data-page-title="{esc(page_title or title)}">
@@ -329,7 +359,7 @@ def footer():
   <a class="btn btn-glass" href="tel:{SITE['phone_e164']}">Call</a>
   <a class="btn btn-primary" href="/contact/">Book Free Call</a>
 </div>
-<script src="/assets/site.js"></script>
+<script src="/assets/site.js" defer></script>
 </body>
 </html>
 """
@@ -600,6 +630,20 @@ def build_404():
     write("/404.html", head("Page not found | Paws & Path", "Page not found.", "/404.html", "", '<meta name="robots" content="noindex">', page_title="404") + body)
 
 
+def build_extras():
+    nl = chr(10)
+    headers = ["/*", "  X-Content-Type-Options: nosniff", "  X-Frame-Options: SAMEORIGIN",
+               "  Referrer-Policy: strict-origin-when-cross-origin",
+               "  Permissions-Policy: camera=(), microphone=(), geolocation=()",
+               "  Strict-Transport-Security: max-age=31536000; includeSubDomains", "",
+               "/assets/*", "  Cache-Control: public, max-age=31536000, immutable", ""]
+    (ROOT / "_headers").write_text(nl.join(headers), encoding="utf-8")
+    lines = ["# " + SITE["name"], "", "> In-home, force-free dog training in Austin, TX, Round Rock, Cedar Park and Pflugerville.", "", "## Services"]
+    lines += [f"- [{v['name']}]({url(v['path'])})" for v in SERVICES.values()]
+    lines += ["", "## Guides"] + [f"- [{p['h1']}]({url('/blog/' + p['slug'] + '/')})" for p in BLOG]
+    (ROOT / "llms.txt").write_text(nl.join(lines) + nl, encoding="utf-8")
+
+
 def build_sitemap():
     urls = [("/", "1.0", "weekly"), ("/services/", "0.9", "monthly"), ("/about/", "0.7", "monthly"), ("/faq/", "0.7", "monthly"),
             ("/contact/", "0.8", "monthly"), ("/blog/", "0.8", "weekly")]
@@ -620,4 +664,5 @@ if __name__ == "__main__":
     build_privacy()
     build_404()
     build_sitemap()
+    build_extras()
     print("Built:", ", ".join(sorted(str(p.relative_to(ROOT)) for p in ROOT.rglob("index.html") if ".claude" not in str(p))))

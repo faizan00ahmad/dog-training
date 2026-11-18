@@ -1,0 +1,20 @@
+# Paws & Path Dog Training
+
+> In-home, force-free dog training in Austin, TX, Round Rock, Cedar Park and Pflugerville.
+
+## Services
+- [Obedience Training](https://www.pawspath.example/services/obedience-training-austin/)
+- [Behaviour Training](https://www.pawspath.example/services/behaviour-training-austin/)
+- [Puppy Training](https://www.pawspath.example/services/puppy-training-austin/)
+
+## Guides
+- [How much does dog training cost in Austin, TX?](https://www.pawspath.example/blog/dog-training-cost-austin-tx/)
+- [In-home dog training vs group classes: how to choose](https://www.pawspath.example/blog/in-home-vs-group-dog-training/)
+- [How to stop your dog pulling on the leash](https://www.pawspath.example/blog/how-to-stop-dog-pulling-on-leash/)
+- [Leash reactive dog: what's really going on and what helps](https://www.pawspath.example/blog/leash-reactive-dog-training/)
+- [How to stop puppy biting: what works at 8 to 16 weeks](https://www.pawspath.example/blog/how-to-stop-puppy-biting/)
+- [How to potty train a puppy in an apartment: a 7-day plan](https://www.pawspath.example/blog/potty-train-puppy-apartment-austin/)
+- [Why does my dog bark at visitors and the doorbell?](https://www.pawspath.example/blog/stop-dog-barking-at-visitors-and-doorbell/)
+- [Dog recall training: teach your dog to come when called](https://www.pawspath.example/blog/dog-recall-training-come-when-called/)
+- [Separation anxiety or boredom: how to tell the difference](https://www.pawspath.example/blog/dog-separation-anxiety-vs-boredom/)
+- [How to choose a dog trainer in Austin: 9 questions to ask first](https://www.pawspath.example/blog/how-to-choose-a-dog-trainer-austin/)

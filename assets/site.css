@@ -141,7 +141,7 @@
   .phone figcaption { position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 12px 14px; border-radius: 18px; font-size: .86rem; line-height: 1.35; background: var(--glass); -webkit-backdrop-filter: var(--blur); backdrop-filter: var(--blur); border: 1px solid var(--glass-edge); color: var(--fg); }
 
   /* Start CTA */
-  .cta { position: relative; overflow: hidden; border-radius: 36px; color: #fff; padding: clamp(40px, 7vw, 88px); display: grid; gap: 28px; grid-template-columns: 1fr; align-items: center; background: #0a1a12 url("assets/obedience.jpg") center/cover; }
+  .cta { position: relative; overflow: hidden; border-radius: 36px; color: #fff; padding: clamp(40px, 7vw, 88px); display: grid; gap: 28px; grid-template-columns: 1fr; align-items: center; background: #0a1a12 url("obedience.jpg") center/cover; }
   .cta::before { content: ""; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(5,16,10,.9) 0%, rgba(5,16,10,.65) 55%, rgba(5,16,10,.35) 100%); }
   .cta > * { position: relative; }
   .cta h2 { color: #fff; font-size: clamp(2.2rem, 5vw, 3.8rem); max-width: 14ch; }
