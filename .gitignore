@@ -7,3 +7,6 @@ Thumbs.db
 # Local media and dependencies
 node_modules/
 *.log
+
+# Third-party Claude skill installed for this project only
+.claude/skills/

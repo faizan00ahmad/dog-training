@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /src/
+Disallow: /.claude/
+
+Sitemap: https://www.pawspath.example/sitemap.xml
